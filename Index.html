@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roblox 2015 Mockup</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #c3c3c3;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: #333;
+            color: white;
+            padding: 15px;
+            font-size: 24px;
+        }
+        .container {
+            margin-top: 50px;
+            background: white;
+            padding: 20px;
+            width: 300px;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        input, select {
+            width: 90%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+        .button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            width: 100%;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        .robux-display {
+            margin-top: 20px;
+            font-size: 18px;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">Roblox 2015</div>
+    <div class="container">
+        <h2>Login / Sign Up</h2>
+        <input type="text" placeholder="Username" id="username">
+        <input type="password" placeholder="Password" id="password">
+        <button class="button" onclick="register()">Create Account</button>
+        <div class="robux-display" id="robuxDisplay"></div>
+        <h3>Avatar</h3>
+        <select id="avatarSelect">
+            <option value="default">Default Avatar</option>
+            <option value="cool">Cool Outfit</option>
+            <option value="classic">Classic Look</option>
+        </select>
+        <button class="button" onclick="updateAvatar()">Change Avatar</button>
+        <h3>Search Users</h3>
+        <input type="text" id="searchUser" placeholder="Enter username">
+        <button class="button" onclick="searchUser()">Search</button>
+        <div id="searchResult"></div>
+    </div>
+    <script>
+        function register() {
+            let username = document.getElementById("username").value;
+            if (username) {
+                localStorage.setItem("username", username);
+                localStorage.setItem("robux", 1000000000000);
+                localStorage.setItem("avatar", "default");
+                updateUI();
+            } else {
+                alert("Please enter a username.");
+            }
+        }
+
+        function updateUI() {
+            let username = localStorage.getItem("username");
+            let robux = localStorage.getItem("robux");
+            if (username) {
+                document.getElementById("robuxDisplay").innerHTML = 
+                    "Welcome, " + username + "! You have <b>" + robux + "</b> Robux.";
+            }
+        }
+
+        function updateAvatar() {
+            let avatar = document.getElementById("avatarSelect").value;
+            localStorage.setItem("avatar", avatar);
+            alert("Avatar updated to " + avatar);
+        }
+
+        function searchUser() {
+            let searchQuery = document.getElementById("searchUser").value;
+            let storedUser = localStorage.getItem("username");
+            if (searchQuery && searchQuery === storedUser) {
+                document.getElementById("searchResult").innerHTML = "User found: " + searchQuery;
+            } else {
+                document.getElementById("searchResult").innerHTML = "User not found.";
+            }
+        }
+
+        window.onload = updateUI;
+    </script>
+</body>
+</html>
